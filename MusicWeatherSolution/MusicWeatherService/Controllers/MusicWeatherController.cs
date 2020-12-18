@@ -10,6 +10,7 @@ using System.Net.Http;
 
 namespace MusicWeatherService.Controllers    
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class MusicWeatherController : ControllerBase
@@ -21,6 +22,16 @@ namespace MusicWeatherService.Controllers
             _clientFactory  = clientFactory;
         }
 
+        /// <summary>
+        /// Sugestão de música de acordo com a temperatura.
+        /// </summary>
+        /// <param name="cidade">Nome da cidade parâmetro opcional</param>
+        /// <param name="lat">Latitude parâmetro opcional</param>
+        /// <param name="lon">Longitude parâmetro opcional</param>
+        /// <returns>Retorna a música sugerida</returns>
+        /// <response code="200">Status retornado se tudo funcionar.</response>
+        /// <response code="400">Retorno caso algum parâmetro esteja inválido</response>
+        /// <response code="500">Retorno em caso de erro de falha geral</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
