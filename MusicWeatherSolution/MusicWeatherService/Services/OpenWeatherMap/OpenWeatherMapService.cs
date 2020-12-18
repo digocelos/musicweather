@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Components;
 
 namespace MusicWeatherService.Services.OpenWeatherMap
 {
-    public class OpenWeatherMapService : IWeatherService
+    public class OpenWeatherMapService : ITemperaturaService
     {
-        private const string _key = "da111002b903278b22a215efe02f8dad";
+        private string _key = Environment.GetEnvironmentVariable("OPEN_WEATHER_MAP_KEY");
         private const string _units = "metric";
         private const string _namedClient = "OpenWeatherMap";
 

@@ -15,17 +15,16 @@ namespace MusicWeatherService.Controllers
     public class MusicWeatherController : ControllerBase
     {
         private readonly IHttpClientFactory _clientFactory;
-        private IWeatherService _weatherService;
 
         public MusicWeatherController(IHttpClientFactory clientFactory)
         {
             _clientFactory  = clientFactory;
-            _weatherService = WeatherServiceFactory.GetInstance(WeatherEngine.OpenWeatherMap, _clientFactory);
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<Musica> Get( [FromQuery] string cidade = "", [FromQuery] double lat = 91, double lon = 181)
         {
             var parametro = new Parametro { 
@@ -40,9 +39,17 @@ namespace MusicWeatherService.Controllers
             {
                 return BadRequest();
             }
-                        
-            var temp = _weatherService.GetTemperaturaAtual(parametro);
-            return Ok(new Musica($"Teste temp: {temp}"));
+
+            try
+            {
+                //Simples como a vida deve ser
+                TemperaturaMusicalService temperaturaMusicalService = new TemperaturaMusicalService(_clientFactory);
+                return temperaturaMusicalService.SugerirMusica(parametro);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
     }
 }

@@ -14,14 +14,15 @@ namespace MusicWeatherService.Services
         OpenWeatherMap
     }
 
-    interface IWeatherService
+    //Contrato para obter a temperatura atual baseado nos parâmetros
+    interface ITemperaturaService
     {
-        public double GetTemperaturaAtual(Parametro parametro);
+        double GetTemperaturaAtual(Parametro parametro);
     }
 
-    class WeatherServiceFactory
+    class TemperaturaServiceFactory
     {
-        public static IWeatherService GetInstance(WeatherEngine engine, IHttpClientFactory clientFactory)
+        public static ITemperaturaService GetInstance(WeatherEngine engine, IHttpClientFactory clientFactory)
         {
             switch(engine)
             {

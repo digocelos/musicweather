@@ -31,6 +31,7 @@ namespace MusicWeatherService
                 client.BaseAddress = new Uri("https://api.openweathermap.org/data/2.5/weather");
                 client.DefaultRequestHeaders.Add("Accept", "*/*");
             });
+            services.AddHttpClient("Spotify");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
