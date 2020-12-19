@@ -11,7 +11,7 @@ using System.Net.Http;
 namespace MusicWeatherService.Controllers    
 {
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/musicweather")]
     [ApiController]
     public class MusicWeatherController : ControllerBase
     {

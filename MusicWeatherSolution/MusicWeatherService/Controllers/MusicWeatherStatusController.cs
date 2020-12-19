@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MusicWeatherService.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("[controller]")]
     [ApiController]
     public class MusicWeatherStatusController : ControllerBase
