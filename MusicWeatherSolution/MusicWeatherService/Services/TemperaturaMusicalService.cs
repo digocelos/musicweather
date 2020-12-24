@@ -8,14 +8,16 @@ using System.Threading.Tasks;
 
 namespace MusicWeatherService.Services
 {
-    public class TemperaturaMusicalService
+    public class TemperaturaMusicalService : ITemperaturaMusicalService
     {
 
-        private IHttpClientFactory _httpClientFactory;
+        private readonly IMusicaService _musicaService;
+        private readonly ITemperaturaService _temperaturaService;
 
-        public TemperaturaMusicalService(IHttpClientFactory httpClientFactory)
+        public TemperaturaMusicalService(IMusicaService musicaService, ITemperaturaService temperaturaService)
         {
-            _httpClientFactory = httpClientFactory;
+            _musicaService = musicaService;
+            _temperaturaService = temperaturaService;
         }
 
         public Musica SugerirMusica(Parametro parametro)
@@ -35,9 +37,7 @@ namespace MusicWeatherService.Services
         private double TemperaturaAtual(Parametro parametro)
         {
             //Monta service responsável por buscar a temperatura
-            ITemperaturaService temperaturaService = TemperaturaServiceFactory
-                .GetInstance(WeatherEngine.OpenWeatherMap, _httpClientFactory);
-            return temperaturaService.GetTemperaturaAtual(parametro);
+            return _temperaturaService.GetTemperaturaAtual(parametro);
         }
 
         private IMusicaTipo GetMusicaTipoPorTemperatua(double temperatura)
@@ -63,8 +63,7 @@ namespace MusicWeatherService.Services
 
         private string MusicaSugerida(IMusicaTipo musicaTipo)
         {
-            IMusicaService musicaService = new SpotifyService(_httpClientFactory, musicaTipo);
-            return musicaService.SugerirMusica();
+            return _musicaService.SugerirMusica(musicaTipo);
         }
     }
 }

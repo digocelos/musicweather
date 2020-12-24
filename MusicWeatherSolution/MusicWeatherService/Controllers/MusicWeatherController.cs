@@ -16,10 +16,12 @@ namespace MusicWeatherService.Controllers
     public class MusicWeatherController : ControllerBase
     {
         private readonly IHttpClientFactory _clientFactory;
+        private readonly ITemperaturaMusicalService _temperaturaMusicalService;
 
-        public MusicWeatherController(IHttpClientFactory clientFactory)
+        public MusicWeatherController(IHttpClientFactory clientFactory, ITemperaturaMusicalService temperaturaMusicalService)
         {
             _clientFactory  = clientFactory;
+            _temperaturaMusicalService = temperaturaMusicalService;
         }
 
         /// <summary>
@@ -54,8 +56,7 @@ namespace MusicWeatherService.Controllers
             try
             {
                 //Simples como a vida deve ser
-                TemperaturaMusicalService temperaturaMusicalService = new TemperaturaMusicalService(_clientFactory);
-                return temperaturaMusicalService.SugerirMusica(parametro);
+                return _temperaturaMusicalService.SugerirMusica(parametro);
             }
             catch (Exception e)
             {

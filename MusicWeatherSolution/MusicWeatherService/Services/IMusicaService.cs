@@ -14,6 +14,6 @@ namespace MusicWeatherService.Services
 
     public interface IMusicaService
     {
-        string SugerirMusica();
+        string SugerirMusica(IMusicaTipo musicaTipo);
     }
 }

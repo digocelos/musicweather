@@ -29,7 +29,7 @@
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:49169/musicweatherstatus",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/musicweatherstatus",
       "environmentVariables": {
         "SpotifyApiClientSecret": "8833d4a0dc7f4269a4ad147f8c6b1dc0",
         "SpotifyApiClientId": "3b0fa693c9904807b4e4f952b1b4a6fb",

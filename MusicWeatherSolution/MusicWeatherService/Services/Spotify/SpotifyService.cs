@@ -13,29 +13,26 @@ namespace MusicWeatherService.Services.Spotify
     public class SpotifyService : IMusicaService
     {
         private const int _limit = 30;
-        private IMusicaTipo _musicaTipo;
 
-        [Inject]
-        private IHttpClientFactory _clientFactory { get; set; }
+        private readonly IHttpClientFactory _clientFactory;
 
-        public SpotifyService(IHttpClientFactory httpClientFactory, IMusicaTipo musicaTipo)
+        public SpotifyService(IHttpClientFactory httpClientFactory)
         {
             _clientFactory = httpClientFactory;
-            _musicaTipo = musicaTipo;
         }
 
-        public string SugerirMusica()
+        public string SugerirMusica(IMusicaTipo musicaTipo)
         {
-            return GetMusica().GetAwaiter().GetResult();
+            return GetMusica(musicaTipo).GetAwaiter().GetResult();
         }
 
-        private async Task<string> GetMusica()
+        private async Task<string> GetMusica(IMusicaTipo musicaTipo)
         {
             var client = _clientFactory.CreateClient("Spotify");
             var accounts = new AccountsService(client);
             var playlists = new PlaylistsApi(client, accounts);
 
-            PlaylistPaged playlist = await playlists.GetTracks(_musicaTipo.GetPlayListID(), limit: _limit);
+            PlaylistPaged playlist = await playlists.GetTracks(musicaTipo.GetPlayListID(), limit: _limit);
 
             //Excolhe uma música aleatória da playlist
             Random rand = new Random();
